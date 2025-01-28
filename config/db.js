@@ -1,21 +1,21 @@
-const mysql = require('mysql2');
+require('dotenv').config();
 
-const connection = mysql.createConnection({
-  host: '208.115.219.142',
-  user: 'affinet1_2025',
-  password: '@Brainstv2025.',
-  database: 'affinet1_new1',
-  port: 3306,
-  connectTimeout: 15000, 
-});
+const dbConfig = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT
+};
 
+// Example: Create a MySQL connection
+const mysql = require('mysql');
+const connection = mysql.createConnection(dbConfig);
 
-connection.connect((err) => {
+connection.connect(err => {
   if (err) {
-    console.error('Error connecting to the database:', err);
-  } else {
-    console.log('Connected to the database');
+    console.error('Error connecting to the database:', err.message);
+    return;
   }
+  console.log('Connected to the database!');
 });
-
-module.exports = connection; 
